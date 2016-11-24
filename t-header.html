@@ -1,0 +1,214 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../iron-icons/maps-icons.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../paper-menu/paper-submenu.html">
+<!--
+`t-header`
+Polymer Header Demo
+
+@demo demo/index.html
+-->
+
+<dom-module id="t-header">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 60px !important;
+      }
+      .flex-horizontal-with-ratios {
+        @apply(--layout-horizontal);
+        width:100%;
+      }
+      .flexchild1 {
+        @apply(--layout-flex-2);
+      }
+      .flexchild2 {
+        @apply(--layout-flex-2);
+      }
+      .flexchild3 {
+        @apply(--layout-flex-2);
+      }
+      [hidden] {
+        display: none !important;
+      }
+      paper-button.custom {
+        --paper-button-ink-color: var(--paper-pink-a200);
+        /* These could also be individually defined for each of the
+		  specific css classes, but we'll just do it once as an example */
+        --paper-button-flat-keyboard-focus: {
+          background-color: var(--paper-pink-a200);
+          color: white !important;
+        };
+        --paper-button-raised-keyboard-focus: {
+          background-color: var(--paper-pink-a200) !important;
+          color: white !important;
+        };
+      }
+      paper-button.custom:hover {
+        background-color: var(--paper-indigo-100);
+      }
+      paper-button.green {
+        background-color: var(--paper-green-500);
+        color: white;
+        display: block;
+        text-align: -webkit-center;
+        margin: 10px;
+      }
+      paper-button.green[active] {
+        background-color: var(--paper-red-500);
+      }
+
+      .labels {
+        display: -webkit-inline-box;
+      }
+      paper-dropdown-menu.accountOptions {
+        --paper-input-container-label: {
+          color: white;
+          text-align: center;
+        };
+        --paper-dropdown-menu-icon: {
+          color: white !important;
+        };
+        --paper-input-container-input: {
+          color: var(--paper-indigo-500);
+          font-style: normal;
+          font-family: serif;
+          text-transform: uppercase;
+        };
+        --paper-input-container-underline: {
+          display: none;
+        };
+      }
+      paper-item {
+        /*color: coral !important;
+		border-bottom: 1px solid;*/
+      }
+
+      .signUp {
+        margin-left: 2px;
+        color: forestgreen;
+      }
+      .signInUp {
+        font-size: 14px;
+        color: #fff;
+      }
+      paper-icon-item {
+        color: white;
+      }
+      .flighticon {
+        color: white;
+      }
+      .labels{
+        color: white;
+      }
+      paper-icon-button {
+        color: white;
+      }
+
+    </style>
+    <app-drawer-layout force-narrow>
+      <app-drawer id="drawer">
+        <paper-menu>
+          <template is="dom-repeat" items="[[travelOptions]]">
+            <paper-item name="{{item.name}}"><iron-icon icon="{{item.icon}}" item-icon></iron-icon>{{item.name}}</paper-item>
+          </template>
+        </paper-menu>
+
+        <paper-menu attr-for-item-title="label" multi>
+          <paper-submenu label="paper-menu">
+            <paper-item class="menu-trigger"><iron-icon icon="[[accountIcon]]" item-icon></iron-icon>[[accountLabel]]</paper-item>
+            <paper-menu class="menu-content sublist" multi>
+              <template is="dom-repeat" items="[[myAccountOptions]]">
+                <paper-item name="{{item}}">{{item}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-submenu>
+        </paper-menu>
+      </app-drawer>
+      <app-header-layout has-scrolling-region>
+        <app-header reveals effects="waterfall">
+          <app-toolbar hidden$="{{wideLayout}}">
+            <div class="flexchild1">
+              <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              <iron-icon class="flighticon" icon="[[logo]]"></iron-icon>
+              <div class="labels">Travel the world</div>
+            </div>
+            <div class="flexchild2 logInWrap">
+              <iron-icon icon="account-box" item-icon class="accountSignin"title="Sign In / Sign Up"></iron-icon>
+              <a class="signInUp" is="pushstate-anchor" href="/">Sign In / Sign Up</a>
+            </div>
+          </app-toolbar>
+          <app-toolbar  hidden$="{{!wideLayout}}">
+            <div class="container flex-horizontal-with-ratios">
+              <div class="flexchild1">
+                <iron-icon class="flighticon" icon="maps:streetview"></iron-icon>
+                <div class="labels">Travel the World</div>
+              </div>
+              <div class="flexchild2">
+                <!-- <t-header travel-options="{{travelOptions}}"></t-header>-->
+                <template is="dom-repeat" items="[[travelOptions]]">
+                  <paper-icon-item class="iconBlock">
+                    <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
+                    {{item.name}}
+                  </paper-icon-item>
+                </template>
+              </div>
+              <div class="flexchild3">
+                <!--<t-header account-label="{{accountLabel}}" my-account-options="{{myAccountOptions}}"></t-header>-->
+                <paper-dropdown-menu label="[[accountLabel]]" noink no-animations no-label-float="true" class="accountOptions">
+                  <paper-listbox class="dropdown-content" layered="true">
+                    <paper-button toggles raised class="custom green">Login</paper-button>
+                    <div class="newLabel">New Customer<a class="signUp" is="pushstate-anchor" href="/">Sign Up</a></div>
+                    <template is="dom-repeat" items="[[myAccountOptions]]">
+                      <paper-item name="{{item}}">{{item}}</paper-item>
+                    </template>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </div>
+            </div>
+          </app-toolbar>
+        </app-header>
+      </app-header-layout>
+    </app-drawer-layout>
+	  <iron-media-query query="min-width: 768px" query-matches="{{wideLayout}}"></iron-media-query>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 't-header',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 't-header',
+        },
+		  toggleIcon: String,
+		  travelOptions: Array,
+		  accountLabel:String,
+		  accountIcon:String,
+		  logo:String,
+		  wideLayout: {
+			  type: Boolean,
+			  value: false,
+			  observer: 'onLayoutChange',
+		  },
+      },
+		onLayoutChange: function(wide) {
+			var drawer = this.$.drawer;
+			if (wide && drawer.opened) {
+				drawer.opened = false;
+			}
+		}
+
+    });
+  </script>
+</dom-module>

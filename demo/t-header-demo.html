@@ -1,0 +1,49 @@
+<link rel="import" href="../../polymer/polymer.html">
+
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="import" href="../t-header.html">
+
+<dom-module id="t-header-demo">
+  <template>
+	  <style>
+		  :host {
+			  display: block;
+		  }
+	  </style>
+	  <t-header travel-options="{{travelOptions}}" my-account-options="{{myAccountOptions}}" account-icon="account-box"
+	  logo="maps:streetview" account-label="{{accountLabel}}"></t-header>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 't-header-demo',
+
+      properties: {
+			prop1: {
+			  type: String,
+			  value: 't-header-demo',
+			},
+		  myAccountOptions: {
+			  type: Array,
+			  value: function() {
+				  return ['Agent Login', 'Corporate Login', 'My Bookings', 'Cancel Bookings', 'Reschedule Bookings',
+					  'Print E-Tickets'];
+			  }
+		  },
+		  travelOptions: {
+			  type: Array,
+			  value: function() {
+				  return [{name: "Flights", icon: "flight-takeoff"},{name: "Bus", icon: "maps:directions-bus"},
+					  {name: "Holidays", icon: "card-travel"}];
+			  }
+		  },
+		  accountLabel:{
+			  type:String,
+			  value:"My Account"
+		  }
+      }
+
+    });
+  </script>
+</dom-module>
