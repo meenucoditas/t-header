@@ -1,49 +1,64 @@
 <link rel="import" href="../../polymer/polymer.html">
 
-<link rel="stylesheet" type="text/css" href="../css/style.css">
+<!--<link rel="stylesheet" type="text/css" href="../css/style.css">-->
 <link rel="import" href="../t-header.html">
 
 <dom-module id="t-header-demo">
-  <template>
-	  <style>
-		  :host {
-			  display: block;
-		  }
-	  </style>
-	  <t-header travel-options="{{travelOptions}}" my-account-options="{{myAccountOptions}}" account-icon="account-box"
-	  logo="maps:streetview" account-label="{{accountLabel}}"></t-header>
-  </template>
+	<template>
+		<style>
+			:host {
+				display: block;
+				--icon-logo-color:white;
+				--logo-label-display:-webkit-inline-box;
+				--logo-label-color:white;
+				--icon-logo-height:35px;
+				--icon-logo-width:35px;
+				--icon-logo-position:relative;
+				--icon-logo-top:-2px;
+			}
+		</style>
+		<t-header travel-options="{{travelOptions}}" my-account-options="{{myAccountOptions}}" account-icon="account-box"
+				  logo="maps:streetview" account-label="{{accountLabel}}" label="{{label}}" sign-in-up="{{signInUp}}"></t-header>
+	</template>
 
-  <script>
-    Polymer({
+	<script>
+		Polymer({
 
-      is: 't-header-demo',
+			is: 't-header-demo',
 
-      properties: {
-			prop1: {
-			  type: String,
-			  value: 't-header-demo',
-			},
-		  myAccountOptions: {
-			  type: Array,
-			  value: function() {
-				  return ['Agent Login', 'Corporate Login', 'My Bookings', 'Cancel Bookings', 'Reschedule Bookings',
-					  'Print E-Tickets'];
-			  }
-		  },
-		  travelOptions: {
-			  type: Array,
-			  value: function() {
-				  return [{name: "Flights", icon: "flight-takeoff"},{name: "Bus", icon: "maps:directions-bus"},
-					  {name: "Holidays", icon: "card-travel"}];
-			  }
-		  },
-		  accountLabel:{
-			  type:String,
-			  value:"My Account"
-		  }
-      }
+			properties: {
+				prop1: {
+					type: String,
+					value: 't-header-demo',
+				},
+				myAccountOptions: {
+					type: Array,
+					value: function() {
+						return ['Agent Login', 'Corporate Login', 'My Bookings', 'Cancel Bookings', 'Reschedule Bookings',
+							'Print E-Tickets'];
+					}
+				},
+				travelOptions: {
+					type: Array,
+					value: function() {
+						return [{name: "Flights", icon: "flight-takeoff"},{name: "Bus", icon: "maps:directions-bus"},
+							{name: "Holidays", icon: "card-travel"}];
+					}
+				},
+				accountLabel:{
+					type:String,
+					value:"My Account"
+				},
+				label:{
+					type:String,
+					value:"Travel the world"
+				},
+				signInUp:{
+					type:String,
+					value:"Sign In / Sign Up"
+				}
+			}
 
-    });
-  </script>
+		});
+	</script>
 </dom-module>

@@ -9,125 +9,177 @@
 <link rel="import" href="../iron-icons/maps-icons.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html">
 <link rel="import" href="../paper-menu/paper-submenu.html">
+<!--<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">-->
 <!--
 `t-header`
-Polymer Header Demo
+Polymer Header Demo ds
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+Apply all changes of custom css properties inside t-header{} in style tag
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--header-display` | Header display | `block`
+`--header-height` | Header Height | `60px`
+`--header-background` | Header Background | `#4387d2`
+`--header-padding` | Header Padding | `10px`
+`--logo-label-display` | Header Label display | `-webkit-inline-box`
+`--logo-label-color` | Header Label color | `white`
+`--header-flex` | Header flex | `flex`
+`--header-flex-width` | Header Flex width | `100%`
+`--label-logo-component-flex` | Header Logo and name flex | `2`
+`--travel-options-component-flex` | Travel Options Flex | `2`
+`--account-options-component-flex` | Account Options Flex | `2`
+`--travel-icon-color` | Travel icons color | `white`
+`--travel-label-color` | Travel labels color | `white`
+`--travel-label-fontsize` | Travel labels font size | `18px`
+`--user-icon-color` | User icon color | `white`
+`--sign-inup-label` | Sign in/up label color | `white`
+`--account-dropdown-label` | Account Options Label | `white`
+`--account-dropdown-align` | Account Options alignment | `center`
+`--account-dropdown-icon-color` | Account Dropdown icon color | `white`
+`--login-button-hover` | Login button hover color | `--paper-indigo-100`
+`--login-button-bg-color` | Login button background color | `#ffaa1f`
+`--login-button-color` | Login button label color | `white`
+`--login-button-display` | Login button display | `block`
+`--login-button-textalign` | Login button texgt alignment | `-webkit-center`
+`--login-button-margin` | Login button margin | `10px`
+`--login-button-active` | Login button active color | `--paper-red-500`
+`--new-customer-label-align` | New Customer Label alignment | `center`
+`--new-customer-label-color` | New Customer Label Color | `#636363`
+`--new-customer-label-fontsize` | New Customer Label fontsize | `11px`
+`--sign-up-color` | Sign Up Color | `#ffaa1f`
+`--logo-icon-color` | Travel Logo Color | `white`
+`--menu-icon-color` | Menu Icon color | `white`
+
 
 @demo demo/index.html
 -->
-
 <dom-module id="t-header">
   <template>
-    <style>
+    <style is="custom-style" include="demo-pages-shared-styles">
+      /* Custom Css*/
       :host {
-        display: block;
-        height: 60px !important;
+        display: var(--header-display, block);
+        height: var(--header-height, 60px);
+        background: var(--header-background,#4387d2);
+        padding: var(--header-padding,10px);
+      }
+
+      .labels {
+        display: var(--logo-label-display, -webkit-inline-box);
+        color:var(--logo-label-color,white);
       }
       .flex-horizontal-with-ratios {
-        @apply(--layout-horizontal);
-        width:100%;
+        display: var(--header-flex,flex);
+        width:var(--header-flex-width,100%);
       }
       .flexchild1 {
-        @apply(--layout-flex-2);
+        flex:var(--label-logo-component-flex,2);
       }
       .flexchild2 {
-        @apply(--layout-flex-2);
+        flex:var(--travel-options-component-flex,2);
       }
       .flexchild3 {
-        @apply(--layout-flex-2);
+        flex:var(--account-options-component-flex,2);
       }
       [hidden] {
         display: none !important;
       }
-      paper-button.custom {
-        --paper-button-ink-color: var(--paper-pink-a200);
-        /* These could also be individually defined for each of the
-		  specific css classes, but we'll just do it once as an example */
-        --paper-button-flat-keyboard-focus: {
-          background-color: var(--paper-pink-a200);
-          color: white !important;
-        };
-        --paper-button-raised-keyboard-focus: {
-          background-color: var(--paper-pink-a200) !important;
-          color: white !important;
-        };
+      .travelIcon{
+        color: var(--travel-icon-color,white);
       }
-      paper-button.custom:hover {
-        background-color: var(--paper-indigo-100);
+      .travelLabel{
+        color: var(--travel-label-color,white);
+        font-size:var(--travel-label-fontsize,18px);
       }
-      paper-button.green {
-        background-color: var(--paper-green-500);
-        color: white;
-        display: block;
-        text-align: -webkit-center;
-        margin: 10px;
+      .accountSignin{
+        color: var(--user-icon-color,white);
       }
-      paper-button.green[active] {
-        background-color: var(--paper-red-500);
-      }
-
-      .labels {
-        display: -webkit-inline-box;
+      .signInUp{
+        color:var(--sign-inup-label,white);
       }
       paper-dropdown-menu.accountOptions {
         --paper-input-container-label: {
-          color: white;
-          text-align: center;
+          color: var(--account-dropdown-label,white);
+          text-align: var(--account-dropdown-align,center);
         };
         --paper-dropdown-menu-icon: {
-          color: white !important;
-        };
-        --paper-input-container-input: {
-          color: var(--paper-indigo-500);
-          font-style: normal;
-          font-family: serif;
-          text-transform: uppercase;
-        };
-        --paper-input-container-underline: {
-          display: none;
+          color: var(--account-dropdown-icon-color,white);
         };
       }
-      paper-item {
-        /*color: coral !important;
-		border-bottom: 1px solid;*/
+      paper-button.custom:hover {
+        background-color: var(--login-button-hover,--paper-indigo-100);
       }
+      paper-button.green {
+        background-color: var(--login-button-bg-color,#ffaa1f);
+        color: var(--login-button-color,white);
+        display: var(--login-button-display,block);
+        text-align: var(--login-button-textalign,-webkit-center);
+        margin: var(--login-button-margin,10px);
+      }
+      paper-button.green[active] {
 
+        background-color: var(--login-button-active,--paper-red-500);
+      }
+      .newLabel{
+        text-align:  var(--new-customer-label-align,center);
+        color:  var(--new-customer-label-color,#636363);
+        font-size:  var(--new-customer-label-fontsize,11px);
+      }
       .signUp {
-        margin-left: 2px;
-        color: forestgreen;
+        color: var(--sign-up-color,#ffaa1f);
       }
-      .signInUp {
-        font-size: 14px;
-        color: #fff;
+      #drawer .iron-icon-1{
+        margin-right: 3px;
       }
-      paper-icon-item {
-        color: white;
+      .flighticon{
+        color:var(--logo-icon-color,white);
       }
-      .flighticon {
-        color: white;
+      .sideMenuIcon{
+        color: var(--menu-icon-color,white);
       }
-      .labels{
-        color: white;
+      @media (max-width: 1200px){
+        app-header-layout[has-scrolling-region]{
+          width: auto;
+        }
       }
-      paper-icon-button {
-        color: white;
+      @media (max-width: 768px){
+        body{
+          height: 700px;
+        }
       }
-
+      @media (max-width: 460px){
+        .logInWrap{
+          flex: 0.3;
+        }
+        .signInUp{
+          display: none;
+        }
+      }
     </style>
     <app-drawer-layout force-narrow>
       <app-drawer id="drawer">
         <paper-menu>
           <template is="dom-repeat" items="[[travelOptions]]">
-            <paper-item name="{{item.name}}"><iron-icon icon="{{item.icon}}" item-icon></iron-icon>{{item.name}}</paper-item>
+            <paper-item name="{{item.name}}" on-tap="_openPage">
+              <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
+              {{item.name}}
+            </paper-item>
           </template>
         </paper-menu>
 
         <paper-menu attr-for-item-title="label" multi>
           <paper-submenu label="paper-menu">
-            <paper-item class="menu-trigger"><iron-icon icon="[[accountIcon]]" item-icon></iron-icon>[[accountLabel]]</paper-item>
+            <paper-item class="menu-trigger">
+              <iron-icon icon="[[accountIcon]]" item-icon></iron-icon>
+              [[accountLabel]]
+            </paper-item>
             <paper-menu class="menu-content sublist" multi>
               <template is="dom-repeat" items="[[myAccountOptions]]">
-                <paper-item name="{{item}}">{{item}}</paper-item>
+                <paper-item name="{{item.name}}" on-tap="_openPage">{{item.name}}</paper-item>
               </template>
             </paper-menu>
           </paper-submenu>
@@ -137,38 +189,41 @@ Polymer Header Demo
         <app-header reveals effects="waterfall">
           <app-toolbar hidden$="{{wideLayout}}">
             <div class="flexchild1">
-              <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+              <paper-icon-button icon="menu" drawer-toggle class="sideMenuIcon"></paper-icon-button>
               <iron-icon class="flighticon" icon="[[logo]]"></iron-icon>
-              <div class="labels">Travel the world</div>
+              <div class="labels">[[label]]</div>
             </div>
             <div class="flexchild2 logInWrap">
-              <iron-icon icon="account-box" item-icon class="accountSignin"title="Sign In / Sign Up"></iron-icon>
-              <a class="signInUp" is="pushstate-anchor" href="/">Sign In / Sign Up</a>
+              <iron-icon icon="[[accountIcon]]" item-icon class="accountSignin"title="[[signInUp]]"></iron-icon>
+              <a class="signInUp" is="pushstate-anchor" href="/">[[signInUp]]</a>
             </div>
           </app-toolbar>
           <app-toolbar  hidden$="{{!wideLayout}}">
             <div class="container flex-horizontal-with-ratios">
               <div class="flexchild1">
-                <iron-icon class="flighticon" icon="maps:streetview"></iron-icon>
-                <div class="labels">Travel the World</div>
+                <iron-icon class="flighticon" icon="[[logo]]"></iron-icon>
+                <div class="labels">[[label]]</div>
               </div>
               <div class="flexchild2">
-                <!-- <t-header travel-options="{{travelOptions}}"></t-header>-->
                 <template is="dom-repeat" items="[[travelOptions]]">
-                  <paper-icon-item class="iconBlock">
-                    <iron-icon icon="{{item.icon}}" item-icon></iron-icon>
-                    {{item.name}}
+                  <paper-icon-item class="iconBlock" on-tap="_openPage">
+                    <iron-icon icon="{{item.icon}}" item-icon class="travelIcon"></iron-icon>
+                    <span class="travelLabel">{{item.name}}</span>
                   </paper-icon-item>
                 </template>
               </div>
               <div class="flexchild3">
-                <!--<t-header account-label="{{accountLabel}}" my-account-options="{{myAccountOptions}}"></t-header>-->
                 <paper-dropdown-menu label="[[accountLabel]]" noink no-animations no-label-float="true" class="accountOptions">
                   <paper-listbox class="dropdown-content" layered="true">
-                    <paper-button toggles raised class="custom green">Login</paper-button>
-                    <div class="newLabel">New Customer<a class="signUp" is="pushstate-anchor" href="/">Sign Up</a></div>
+                    <content select=".login"></content>
+                    <template is="dom-if" if="{{_loginLabel}}">
+                      <paper-button toggles raised class="custom green">{{loginLabel}}</paper-button>
+                    </template>
+                    <div class="newLabel">New Customer
+                      <content select=".signUp"></content>
+                    </div>
                     <template is="dom-repeat" items="[[myAccountOptions]]">
-                      <paper-item name="{{item}}">{{item}}</paper-item>
+                      <paper-item name="{{item.name}}" on-tap="_openPage">{{item.name}}</paper-item>
                     </template>
                   </paper-listbox>
                 </paper-dropdown-menu>
@@ -178,37 +233,83 @@ Polymer Header Demo
         </app-header>
       </app-header-layout>
     </app-drawer-layout>
-	  <iron-media-query query="min-width: 768px" query-matches="{{wideLayout}}"></iron-media-query>
+    <iron-media-query query="min-width: 768px" query-matches="{{wideLayout}}"></iron-media-query>
   </template>
-
   <script>
     Polymer({
 
       is: 't-header',
 
       properties: {
-        prop1: {
-          type: String,
-          value: 't-header',
+        accountIcon:{
+          type:String,
+          value:"account-box"
         },
-		  toggleIcon: String,
-		  travelOptions: Array,
-		  accountLabel:String,
-		  accountIcon:String,
-		  logo:String,
-		  wideLayout: {
-			  type: Boolean,
-			  value: false,
-			  observer: 'onLayoutChange',
-		  },
-      },
-		onLayoutChange: function(wide) {
-			var drawer = this.$.drawer;
-			if (wide && drawer.opened) {
-				drawer.opened = false;
-			}
-		}
+        logo:{
+          type:String,
+          value:"maps:streetview"
+        },
+        myAccountOptions: {
+          type: Array,
+          value: function() {
+            return [{"name": "Agent Login","url":"/agentlogin"},{"name": "Corporate Login","url":"/corporatelogin"},
+              {"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}];
+          }
+        },
+        travelOptions: {
+          type: Array,
+          value: function() {
+            return [{"name": "Flights", "icon": "flight-takeoff","url":"/flights"},{"name": "Bus", "icon": "maps:directions-bus","url":"/buses"},
+              {"name": "Holidays", "icon": "card-travel","url":"/holidays"}];
+          }
+        },
+        accountLabel:{
+          type:String,
+          value:"My Account"
+        },
+        label:{
+          type:String,
+          value:"Travel the world"
+        },
+        signInUp:{
+          type:String,
+          value:"Sign In / Sign Up"
+        },
 
+        loginLabel:{
+          type:String,
+          value:'Login'
+        },
+        signUpLabel:{
+          type:String
+        },
+        _loginLabel:{
+          type:Boolean,
+          value:false,
+          notify: true
+        },
+        loginLabel:{
+          type:String,
+          value:'Login'
+        }
+      },
+      onLayoutChange: function(wide) {
+        var drawer = this.$.drawer;
+        if (wide && drawer.opened) {
+          drawer.opened = false;
+        }
+      },
+
+      attached: function() {
+        this.loginChildCount = this.queryEffectiveChildren('.login');
+        if(this.loginChildCount === undefined || this.loginChildCount === 'undefined'){
+          this._loginLabel = true;
+        }
+      },
+
+      _openPage: function(e){
+        window.open(e.model.get('item.url'));
+      }
     });
   </script>
 </dom-module>

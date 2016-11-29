@@ -1,18 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-
-    <title>t-header demo</title>
-
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="t-header-demo.html">
-  </head>
-  <body>
-	<t-header-demo></t-header-demo>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>t-header demo</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../iron-icons/maps-icons.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../t-header.html">
+  <style is="custom-style">
+    t-header{
+      /*Add custom css for header component here only*/
+      /*--header-background:#cccccc;*/
+    }
+  </style>
+</head>
+<body>
+<t-header account-icon="account-box" logo="maps:streetview" account-label="My Account"
+          label="Travel the world" sign-in-up="Sign In / Sign Up" travel-options='[{"name": "Flights", "icon": "flight-takeoff","url":"/flights"},{"name": "Bus", "icon": "maps:directions-bus","url":"/buses"},
+				{"name": "Holidays", "icon": "card-travel","url":"/holidays"}]' my-account-options='[{"name": "Agent Login","url":"/agentlogin"},{"name": "Corporate Login","url":"/corporatelogin"},
+							{"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}]' sign-up-label="Sign Up" login-label="Login">
+  <paper-button toggles raised class="login">Login</paper-button><a class="signUp" is="pushstate-anchor" href="/">
+  Sign Up</a></t-header>
+</body>
 </html>
