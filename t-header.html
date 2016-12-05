@@ -39,9 +39,6 @@ Custom property | Description | Default
 `--travel-options-icon-height` | Travel icons Height | `20px`
 `--travel-options-label-color` | Travel labels color | `white`
 `--travel-options-label-fontsize` | Travel labels font size | `18px`
-`--sign-inup-label` | Sign in/up label color | `white`
-`--sign-inup-font-size` | Sign in/up label font size| `16px`
-`--sign-inup-padding` | Sign in/up label padding | `7px`
 `--account-dropdown-label` | Account Options Label | `white`
 `--account-dropdown-align` | Account Options alignment | `center`
 `--account-dropdown-icon-color` | Account Dropdown icon color | `white`
@@ -52,6 +49,7 @@ Custom property | Description | Default
 `--sidebar-image-margin-right` | right margin for sidebar images  | `10px`
 `--header-menu-traveloptions-display` | Display for header menu travel options  | `inline`
 `--header-menu-traveloptions-padding` | Padding for header menu travel options  | `10px`
+`--header-menu-traveloptions-cursor-option` | Cursor option header menu travel options  | `pointer`
 `--header-menu-traveloptions-background` | Background for header menu travel options  | `none`
 `--travel-options-selected-item-bgcolor` | Background of Selected Travel Option  | `#56A5EC`
 `--useraccount-dropdown-input-underline-display` | Display for Dropdown Input Container | `none`
@@ -60,7 +58,7 @@ Custom property | Description | Default
 `--useraccount-dropdown-input-container-color` |  User Account drop down container color| `white`
 `--header-image-float` |  Header Logo Float| `left`
 `--useraccount-image-float` |  User Account logo float| `left`
-
+`--useraccount-cursor-option` |  User Account Cursor option | `pointer`
 @demo demo/index.html
 -->
 <dom-module id="t-header">
@@ -105,11 +103,6 @@ Custom property | Description | Default
 				color: var(--travel-options-label-color,white);
 				font-size:var(--travel-options-label-fontsize,18px);
 			}
-			.signInUp{
-				color:var(--sign-inup-label,white);
-				padding:var(--sign-inup-padding,7px);
-				font-size: var(--sign-inup-font-size,16px);
-			}
 			paper-dropdown-menu.accountOptions {
 				--paper-input-container-label: {
 					color: var(--account-dropdown-label,white);
@@ -132,14 +125,6 @@ Custom property | Description | Default
 					height: 700px;
 				}
 			}
-			@media (max-width: 460px){
-				.logInWrap{
-					flex: 0.3;
-				}
-				.signInUp{
-					display: none;
-				}
-			}
 			.sideBarOptionsImage{
 				-webkit-filter: var(--invert-sidebar-image-color,invert(1));
 				margin-right: var(--sidebar-image-margin-right,10px);
@@ -150,6 +135,7 @@ Custom property | Description | Default
 			paper-item.options{
 				display: var(--header-menu-traveloptions-display,inline);
 				padding: var(--header-menu-traveloptions-padding,10px);
+				cursor: var(--header-menu-traveloptions-cursor-option,pointer);
 			}
 			paper-menu{
 				--paper-menu-selected-item:{
@@ -169,28 +155,23 @@ Custom property | Description | Default
 				--paper-input-container-input: {
 					color:var(--useraccount-dropdown-input-container-color,white);
 				};
-				--iron-dropdown:{
-					top:0px;
-				}
 			}
 			.logo{
 				float: var(--header-logo-float,left);
 			}
-			.userAccountLogo{
-				float: var(--useraccount-image-float,left);
+			paper-menu.cursorOption{
+				cursor: var(--useraccount-cursor-option,pointer);
 			}
 		</style>
 		<app-drawer-layout force-narrow>
 			<app-drawer id="drawer">
-				<paper-menu selected="{{selectedOptionValue}}" attr-for-selected="value">
-					<!--<paper-listbox selected="{{selectedOptionValue}}" attr-for-selected="value">-->
+				<paper-menu selected="{{selectedOptionValue}}" attr-for-selected="value" class="cursorOption">
 						<template is="dom-repeat" items="[[travelOptions]]">
 							<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">
 								<img src="{{item.imageUrl}}" class="sideBarOptionsImage">
 								{{item.name}}
 							</paper-item>
 						</template>
-					<!--</paper-listbox>-->
 				</paper-menu>
 
 				<paper-menu attr-for-item-title="label">
@@ -199,7 +180,7 @@ Custom property | Description | Default
 							<img src="{{userAccountImageUrl}}" class="sideBarOptionsImage">
 							[[userAccountLabel]]
 						</paper-item>
-						<paper-menu class="menu-content sublist" selected="{{selectedAccountOptionValue}}" attr-for-selected="value">
+						<paper-menu class="menu-content sublist cursorOption" selected="{{selectedAccountOptionValue}}" attr-for-selected="value">
 							<template is="dom-repeat" items="[[userAccountOptions]]">
 								<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">{{item.name}}</paper-item>
 							</template>
@@ -217,14 +198,6 @@ Custom property | Description | Default
 							</template>
 							<template is="dom-if" if="{{headerLabel}}">
 								<div class="headerLabel">{{headerLabel}}</div>
-							</template>
-						</div>
-						<div class="logInWrap">
-							<template is="dom-if" if="{{userAccountImageUrl}}">
-								<img src="{{userAccountImageUrl}}" class="userAccountLogo">
-							</template>
-							<template is="dom-if" if="{{signInUpLinkLabel}}">
-								<a class="signInUp" is="pushstate-anchor" href="/">{{signInUpLinkLabel}}</a>
 							</template>
 						</div>
 					</app-toolbar>
@@ -252,9 +225,9 @@ Custom property | Description | Default
 							</div>
 							<div class="flexchild3">
 								<template is="dom-if" if="{{userAccountOptions}}">
-									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions" >
+									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions">
 										<paper-menu selected="{{selectedAccountOptionValue}}" attr-for-selected="value"
-													class="dropdown-content" noink no-animations>
+													class="dropdown-content cursorOption" noink no-animations>
 											<template is="dom-repeat" items="[[userAccountOptions]]">
 												<paper-item name="{{item.name}}" on-tap="_openPage"
 															value="{{item.name}}">{{item.name}}</paper-item>
