@@ -12,8 +12,7 @@
 <!--<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">-->
 <!--
 `t-header`
-Polymer Header Demo 
-
+Polymer Header Demo
 ### Styling
 
 The following custom properties and mixins are available for styling:
@@ -27,17 +26,22 @@ Custom property | Description | Default
 `--header-padding` | Header Padding | `10px`
 `--logo-label-display` | Header Label display | `-webkit-inline-box`
 `--logo-label-color` | Header Label color | `white`
+`--logo-label-padding` | Header Label color | `7px`
+`--logo-label-float` | Header Label color | `left`
 `--header-flex` | Header flex | `flex`
 `--header-flex-width` | Header Flex width | `100%`
 `--label-logo-component-flex` | Header Logo and name flex | `2`
 `--travel-options-component-flex` | Travel Options Flex | `3`
 `--account-options-component-flex` | Account Options Flex | `1`
-`--account-options-margin-top` | Account Options Flex | `5px`
+`--travel-options-margin-top` | Travel Options Margin Top | `5px`
+`--header-label-logo-margin-top` | Header Label logo Margin Top | `5px`
 `--travel-options-icon-color` | Travel icons color | `white`
 `--travel-options-icon-height` | Travel icons Height | `20px`
 `--travel-options-label-color` | Travel labels color | `white`
 `--travel-options-label-fontsize` | Travel labels font size | `18px`
 `--sign-inup-label` | Sign in/up label color | `white`
+`--sign-inup-font-size` | Sign in/up label font size| `16px`
+`--sign-inup-padding` | Sign in/up label padding | `7px`
 `--account-dropdown-label` | Account Options Label | `white`
 `--account-dropdown-align` | Account Options alignment | `center`
 `--account-dropdown-icon-color` | Account Dropdown icon color | `white`
@@ -52,6 +56,11 @@ Custom property | Description | Default
 `--travel-options-selected-item-bgcolor` | Background of Selected Travel Option  | `#56A5EC`
 `--useraccount-dropdown-input-underline-display` | Display for Dropdown Input Container | `none`
 `--useraccount-dropdown-input-underline-focused-display` |  Display on click of Dropdown| `none`
+`--useraccount-dropdown-input-container-padding` |    User Account drop down container padding| `0px`
+`--useraccount-dropdown-input-container-color` |  User Account drop down container color| `white`
+`--header-image-float` |  Header Logo Float| `left`
+`--useraccount-image-float` |  User Account logo float| `left`
+
 @demo demo/index.html
 -->
 <dom-module id="t-header">
@@ -65,9 +74,10 @@ Custom property | Description | Default
 				padding: var(--header-padding,10px);
 			}
 
-			.labels {
-				display: var(--logo-label-display, -webkit-inline-box);
+			.headerLabel {
 				color:var(--logo-label-color,white);
+				padding: var(--logo-label-padding,7px);
+				float: var(--logo-label-float,left);
 			}
 			.flex-horizontal-with-ratios {
 				display: var(--header-flex,flex);
@@ -75,13 +85,14 @@ Custom property | Description | Default
 			}
 			.flexchild1 {
 				flex:var(--label-logo-component-flex,2);
+				margin-top: var(--header-label-logo-margin-top,5px);
 			}
 			.flexchild2 {
 				flex:var(--travel-options-component-flex,3);
+				margin-top: var(--travel-options-margin-top,5px);
 			}
 			.flexchild3 {
 				flex:var(--account-options-component-flex,1);
-				margin-top: var(--account-options-margin-top,5px);
 			}
 			[hidden] {
 				display: none !important;
@@ -96,6 +107,8 @@ Custom property | Description | Default
 			}
 			.signInUp{
 				color:var(--sign-inup-label,white);
+				padding:var(--sign-inup-padding,7px);
+				font-size: var(--sign-inup-font-size,16px);
 			}
 			paper-dropdown-menu.accountOptions {
 				--paper-input-container-label: {
@@ -150,6 +163,21 @@ Custom property | Description | Default
 				--paper-input-container-underline-focus:{
 					display:var(--useraccount-dropdown-input-underline-focused-display,none);
 				};
+				--paper-input-container: {
+					padding:var(--useraccount-dropdown-input-container-padding,0px);
+				};
+				--paper-input-container-input: {
+					color:var(--useraccount-dropdown-input-container-color,white);
+				};
+				--iron-dropdown:{
+					top:0px;
+				}
+			}
+			.logo{
+				float: var(--header-logo-float,left);
+			}
+			.userAccountLogo{
+				float: var(--useraccount-image-float,left);
 			}
 		</style>
 		<app-drawer-layout force-narrow>
@@ -165,13 +193,13 @@ Custom property | Description | Default
 					<!--</paper-listbox>-->
 				</paper-menu>
 
-				<paper-menu attr-for-item-title="label" multi>
+				<paper-menu attr-for-item-title="label">
 					<paper-submenu label="paper-menu">
 						<paper-item class="menu-trigger">
 							<img src="{{userAccountImageUrl}}" class="sideBarOptionsImage">
 							[[userAccountLabel]]
 						</paper-item>
-						<paper-menu class="menu-content sublist" multi>
+						<paper-menu class="menu-content sublist" selected="{{selectedAccountOptionValue}}" attr-for-selected="value">
 							<template is="dom-repeat" items="[[userAccountOptions]]">
 								<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">{{item.name}}</paper-item>
 							</template>
@@ -182,18 +210,18 @@ Custom property | Description | Default
 			<app-header-layout has-scrolling-region>
 				<app-header reveals effects="waterfall">
 					<app-toolbar hidden$="{{wideLayout}}">
+						<paper-icon-button icon="menu" drawer-toggle class="sideMenuIcon"></paper-icon-button>
 						<div class="flexchild1">
-							<paper-icon-button icon="menu" drawer-toggle class="sideMenuIcon"></paper-icon-button>
 							<template is="dom-if" if="{{logoUrl}}">
-								<img src="{{logoUrl}}">
+								<img src="{{logoUrl}}" class="logo">
 							</template>
 							<template is="dom-if" if="{{headerLabel}}">
-								<div class="labels">{{headerLabel}}</div>
+								<div class="headerLabel">{{headerLabel}}</div>
 							</template>
 						</div>
-						<div class="flexchild2 logInWrap">
+						<div class="logInWrap">
 							<template is="dom-if" if="{{userAccountImageUrl}}">
-								<img src="{{userAccountImageUrl}}">
+								<img src="{{userAccountImageUrl}}" class="userAccountLogo">
 							</template>
 							<template is="dom-if" if="{{signInUpLinkLabel}}">
 								<a class="signInUp" is="pushstate-anchor" href="/">{{signInUpLinkLabel}}</a>
@@ -204,10 +232,10 @@ Custom property | Description | Default
 						<div class="container flex-horizontal-with-ratios">
 							<div class="flexchild1">
 								<template is="dom-if" if="{{logoUrl}}">
-									<img src="{{logoUrl}}">
+									<img src="{{logoUrl}}" class="logo">
 								</template>
 								<template is="dom-if" if="{{headerLabel}}">
-									<div class="labels">{{headerLabel}}</div>
+									<div class="headerLabel">{{headerLabel}}</div>
 								</template>
 							</div>
 							<div class="flexchild2">
@@ -224,14 +252,14 @@ Custom property | Description | Default
 							</div>
 							<div class="flexchild3">
 								<template is="dom-if" if="{{userAccountOptions}}">
-									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions"  noink no-animations no-label-float="true" hidden$="{{userAccountLabel == '' || userAccountLabel == undefined}}">
-										<!--<paper-menu class="dropdown-content">-->
-											<paper-listbox class="dropdown-content" layered="true">
-												<template is="dom-repeat" items="[[userAccountOptions]]">
-													<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">{{item.name}}</paper-item>
-												</template>
-											</paper-listbox>
-										<!--</paper-menu>-->
+									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions" >
+										<paper-menu selected="{{selectedAccountOptionValue}}" attr-for-selected="value"
+													class="dropdown-content" noink no-animations>
+											<template is="dom-repeat" items="[[userAccountOptions]]">
+												<paper-item name="{{item.name}}" on-tap="_openPage"
+															value="{{item.name}}">{{item.name}}</paper-item>
+											</template>
+										</paper-menu>
 									</paper-dropdown-menu>
 								</template>
 							</div>
@@ -283,17 +311,9 @@ Custom property | Description | Default
 				},
 				userAccountImageUrl:{
 					type:String
-				},
-				selectedOptionValue: {
-					type: String,
-					observer: 'getValue',
-					notify: true,
-					value:''
 				}
 			},
-			getValue: function(newValue, oldValue) {
-				/*Do nothing for now*/
-			},
+
 			onLayoutChange: function(wide) {
 				var drawer = this.$.drawer;
 				if (wide && drawer.opened) {
