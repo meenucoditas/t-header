@@ -13,6 +13,55 @@
 <!--
 `t-header`
 Polymer Header Demo
+
+`t-header` helps you to add a header in your html page.Basically,it works for travel sites.
+
+We have listed out properties in `Properties` section under `API reference` below.
+
+You can use this header component like this in body tag of html file :
+
+<pre><code>
+&lt;body>
+  &lt;t-header
+			user-account-image-url="../user.png"
+			user-account-label="My Account"
+		header-label="Travel the world" user-account-options='[{"name": "Agent Login","url":"/agentlogin"},
+					{"name": "Corporate Login","url":"/corporatelogin"},
+					{"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}]'
+		logo-url="../logo.png"
+		travel-options='[{"name": "Flights", "imageUrl": "../flight.png","url":"/flights"},
+						{"name": "Bus", "imageUrl": "../bus.png","url":"/buses"},
+						{"name": "Holidays", "imageUrl": "../hotel.png","url":"/holidays"}]'>
+  &lt;/t-header>
+&lt;/body>
+</code></pre>
+
+See <a href="https://www.polymer-project.org/1.0/docs/devguide/properties#property-name-mapping" target="_blank">Property name to attribute name mapping</a> for more information about
+`attribute values`.
+
+If you do not pass any attribute value in `<t-header>`tag . Then you will see only a blank blue header.That's how this header component works.
+
+<pre><code>
+&lt;body>
+  &lt;t-header>
+  &lt;/t-header>
+&lt;/body>
+</code></pre>
+
+Also,you can customize css properties in your html page where you embed t-header.html
+
+Example:
+<pre><code>
+&lt;style is="custom-style">
+  t-header {
+    /* Add custom css for header component only*/
+    --header-height:80px;
+    --header-background:#cccccc;
+  }
+&lt;/style>
+</code></pre>
+
+
 ### Styling
 
 The following custom properties and mixins are available for styling:
@@ -249,21 +298,44 @@ Custom property | Description | Default
 			is: 't-header',
 
 			properties: {
+				/**
+				 * Pass logo url to set the header logo
+				 */
 				logoUrl:{
 					type:String
 				},
+				/**
+				 * You can pass user account options as an array of json to set the account options like
+				 *[{"name": "Agent Login","url":"/agentlogin"},{"name": "Corporate Login","url":"/corporatelogin"},
+				 *{"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}]
+				 */
 				userAccountOptions: {
 					type: Array
 				},
+				/**
+				 * You can pass travel options as an array of json to set the travel options like
+				 *[{"name": "Flights", "imageUrl": "../flight.png","url":"/flights"},
+				 *{"name": "Bus", "imageUrl": "../bus.png","url":"/buses"},
+				 *{"name": "Holidays", "imageUrl": "../hotel.png","url":"/holidays"}]
+				 */
 				travelOptions: {
 					type: Array
 				},
+				/**
+				 * You can pass account label value to set the account label
+				 */
 				userAccountLabel:{
 					type:String
 				},
+				/**
+				 * You can pass header label value to set the header label
+				 */
 				headerLabel:{
 					type:String
 				},
+				/**
+				 * You can pass image url to set the user account image
+				 */
 				userAccountImageUrl:{
 					type:String
 				}
