@@ -21,15 +21,15 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
   },
   "homepage": "https://github.com/meenucoditas/t-header",
-  "version": "0.0.3",
-  "_release": "0.0.3",
+  "version": "0.0.8",
+  "_release": "0.0.8",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.3",
-    "commit": "a15aa9c5aa44d1f1bb024ccd95325881147b0d7e"
+    "tag": "v0.0.8",
+    "commit": "7aee6b0b50ca255e1bb3a5fbff920cce0dc88738"
   },
   "_source": "https://github.com/meenucoditas/t-header.git",
-  "_target": "^0.0.3",
+  "_target": "^0.0.8",
   "_originalSource": "meenucoditas/t-header",
   "_direct": true
 }
