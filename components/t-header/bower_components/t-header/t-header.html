@@ -1,0 +1,364 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../app-layout/app-layout.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-menu/paper-menu.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../iron-icons/maps-icons.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html">
+<link rel="import" href="../paper-menu/paper-submenu.html">
+<!--<link rel="import" href="../iron-demo-helpers/demo-pages-shared-styles.html">-->
+<!--
+`t-header`
+Polymer Header Demo
+
+`t-header` helps you to add a header in your html page.Basically,it works for travel sites.
+
+We have listed out properties in `Properties` section under `API reference` below.
+
+You can use this header component like this in body tag of html file :
+
+<pre><code>
+&lt;body>
+  &lt;t-header
+			user-account-image-url="../user.png"
+			user-account-label="My Account"
+		header-label="Travel the world" user-account-options='[{"name": "Agent Login","url":"/agentlogin"},
+					{"name": "Corporate Login","url":"/corporatelogin"},
+					{"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}]'
+		logo-url="../logo.png"
+		travel-options='[{"name": "Flights", "imageUrl": "../flight.png","url":"/flights"},
+						{"name": "Bus", "imageUrl": "../bus.png","url":"/buses"},
+						{"name": "Holidays", "imageUrl": "../hotel.png","url":"/holidays"}]'>
+  &lt;/t-header>
+&lt;/body>
+</code></pre>
+
+See <a href="https://www.polymer-project.org/1.0/docs/devguide/properties#property-name-mapping" target="_blank">Property name to attribute name mapping</a> for more information about
+`attribute values`.
+
+If you do not pass any attribute value in `<t-header>`tag . Then you will see only a blank blue header.That's how this header component works.
+
+<pre><code>
+&lt;body>
+  &lt;t-header>
+  &lt;/t-header>
+&lt;/body>
+</code></pre>
+
+Also,you can customize css properties in your html page where you embed t-header.html
+
+Example:
+<pre><code>
+&lt;style is="custom-style">
+  t-header {
+    /* Add custom css for header component only*/
+    --header-height:80px;
+    --header-background:#cccccc;
+  }
+&lt;/style>
+</code></pre>
+
+
+### Styling
+
+The following custom properties and mixins are available for styling:
+Apply all changes of custom css properties inside t-header{} in style tag
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--header-display` | Header display | `block`
+`--header-height` | Header Height | `60px`
+`--header-background` | Header Background | `#4387d2`
+`--header-padding` | Header Padding | `10px`
+`--logo-label-display` | Header Label display | `-webkit-inline-box`
+`--logo-label-color` | Header Label color | `white`
+`--logo-label-padding` | Header Label color | `7px`
+`--logo-label-float` | Header Label color | `left`
+`--header-flex` | Header flex | `flex`
+`--header-flex-width` | Header Flex width | `100%`
+`--label-logo-component-flex` | Header Logo and name flex | `2`
+`--travel-options-component-flex` | Travel Options Flex | `3`
+`--account-options-component-flex` | Account Options Flex | `1`
+`--travel-options-margin-top` | Travel Options Margin Top | `5px`
+`--header-label-logo-margin-top` | Header Label logo Margin Top | `5px`
+`--travel-options-icon-color` | Travel icons color | `white`
+`--travel-options-icon-height` | Travel icons Height | `20px`
+`--travel-options-label-color` | Travel labels color | `white`
+`--travel-options-label-fontsize` | Travel labels font size | `18px`
+`--account-dropdown-label` | Account Options Label | `white`
+`--account-dropdown-align` | Account Options alignment | `center`
+`--account-dropdown-icon-color` | Account Dropdown icon color | `white`
+`--menu-icon-color` | Menu Icon color | `white`
+`--opened-drawer-bgcolor` | Opened Drawer Background color | `#4387d2`
+`--drawer-options-bgcolor` | Opened Drawer Background color | `#4387d2`
+`--invert-sidebar-image-color` | Invert Color of sidebar Images | `invert(1)`
+`--sidebar-image-margin-right` | right margin for sidebar images  | `10px`
+`--header-menu-traveloptions-display` | Display for header menu travel options  | `inline`
+`--header-menu-traveloptions-padding` | Padding for header menu travel options  | `10px`
+`--header-menu-traveloptions-cursor-option` | Cursor option header menu travel options  | `pointer`
+`--header-menu-traveloptions-background` | Background for header menu travel options  | `none`
+`--travel-options-selected-item-bgcolor` | Background of Selected Travel Option  | `#56A5EC`
+`--useraccount-dropdown-input-underline-display` | Display for Dropdown Input Container | `none`
+`--useraccount-dropdown-input-underline-focused-display` |  Display on click of Dropdown| `none`
+`--useraccount-dropdown-input-container-padding` |    User Account drop down container padding| `0px`
+`--useraccount-dropdown-input-container-color` |  User Account drop down container color| `white`
+`--header-image-float` |  Header Logo Float| `left`
+`--useraccount-image-float` |  User Account logo float| `left`
+`--useraccount-cursor-option` |  User Account Cursor option | `pointer`
+@demo demo/index.html
+-->
+<dom-module id="t-header">
+	<template>
+		<style is="custom-style" include="demo-pages-shared-styles">
+		/* Custom Css*/
+			:host {
+				display: var(--header-display, block);
+				height: var(--header-height, 60px);
+				background: var(--header-background,#4387d2);
+				padding: var(--header-padding,10px);
+			}
+
+			.headerLabel {
+				color:var(--logo-label-color,white);
+				padding: var(--logo-label-padding,7px);
+				float: var(--logo-label-float,left);
+			}
+			.flex-horizontal-with-ratios {
+				display: var(--header-flex,flex);
+				width:var(--header-flex-width,100%);
+			}
+			.flexchild1 {
+				flex:var(--label-logo-component-flex,2);
+				margin-top: var(--header-label-logo-margin-top,5px);
+			}
+			.flexchild2 {
+				flex:var(--travel-options-component-flex,3);
+				margin-top: var(--travel-options-margin-top,5px);
+			}
+			.flexchild3 {
+				flex:var(--account-options-component-flex,1);
+			}
+			[hidden] {
+				display: none !important;
+			}
+			.travelOptionsIconColor{
+				color: var(--travel-options-icon-color,white);
+				height: var(--travel-options-icon-height,20px);
+			}
+			.travelOptionsLabel{
+				color: var(--travel-options-label-color,white);
+				font-size:var(--travel-options-label-fontsize,18px);
+			}
+			paper-dropdown-menu.accountOptions {
+				--paper-input-container-label: {
+					color: var(--account-dropdown-label,white);
+					text-align: var(--account-dropdown-align,center);
+				};
+				--paper-dropdown-menu-icon: {
+					color: var(--account-dropdown-icon-color,white);
+				};
+			}
+			.sideMenuIcon{
+				color: var(--menu-icon-color,white);
+			}
+			@media (max-width: 1200px){
+				app-header-layout[has-scrolling-region]{
+					width: auto;
+				}
+			}
+			@media (max-width: 768px){
+				body{
+					height: 700px;
+				}
+			}
+			.sideBarOptionsImage{
+				-webkit-filter: var(--invert-sidebar-image-color,invert(1));
+				margin-right: var(--sidebar-image-margin-right,10px);
+			}
+			paper-menu.centerMenuTravelOptions{
+				background: var(--header-menu-traveloptions-background,none);
+			}
+			paper-item.options{
+				display: var(--header-menu-traveloptions-display,inline);
+				padding: var(--header-menu-traveloptions-padding,10px);
+				cursor: var(--header-menu-traveloptions-cursor-option,pointer);
+			}
+			paper-menu{
+				--paper-menu-selected-item:{
+					background: var(--travel-options-selected-item-bgcolor,#56A5EC);
+				}
+			}
+			paper-dropdown-menu{
+				--paper-input-container-underline:{
+					display: var(--useraccount-dropdown-input-underline-display,none);
+				};
+				--paper-input-container-underline-focus:{
+					display:var(--useraccount-dropdown-input-underline-focused-display,none);
+				};
+				--paper-input-container: {
+					padding:var(--useraccount-dropdown-input-container-padding,0px);
+				};
+				--paper-input-container-input: {
+					color:var(--useraccount-dropdown-input-container-color,white);
+				};
+			}
+			.logo{
+				float: var(--header-logo-float,left);
+			}
+			paper-menu.cursorOption{
+				cursor: var(--useraccount-cursor-option,pointer);
+			}
+		</style>
+		<app-drawer-layout force-narrow>
+			<app-drawer id="drawer">
+				<paper-menu selected="{{selectedOptionValue}}" attr-for-selected="value" class="cursorOption">
+						<template is="dom-repeat" items="[[travelOptions]]">
+							<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">
+								<img src="{{item.imageUrl}}" class="sideBarOptionsImage">
+								{{item.name}}
+							</paper-item>
+						</template>
+				</paper-menu>
+
+				<paper-menu attr-for-item-title="label">
+					<paper-submenu label="paper-menu">
+						<paper-item class="menu-trigger">
+							<img src="{{userAccountImageUrl}}" class="sideBarOptionsImage">
+							[[userAccountLabel]]
+						</paper-item>
+						<paper-menu class="menu-content sublist cursorOption" selected="{{selectedAccountOptionValue}}" attr-for-selected="value">
+							<template is="dom-repeat" items="[[userAccountOptions]]">
+								<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">{{item.name}}</paper-item>
+							</template>
+						</paper-menu>
+					</paper-submenu>
+				</paper-menu>
+			</app-drawer>
+			<app-header-layout has-scrolling-region>
+				<app-header reveals effects="waterfall">
+					<app-toolbar hidden$="{{wideLayout}}">
+						<paper-icon-button icon="menu" drawer-toggle class="sideMenuIcon"></paper-icon-button>
+						<div class="flexchild1">
+							<template is="dom-if" if="{{logoUrl}}">
+								<img src="{{logoUrl}}" class="logo">
+							</template>
+							<template is="dom-if" if="{{headerLabel}}">
+								<div class="headerLabel">{{headerLabel}}</div>
+							</template>
+						</div>
+					</app-toolbar>
+					<app-toolbar  hidden$="{{!wideLayout}}">
+						<div class="container flex-horizontal-with-ratios">
+							<div class="flexchild1">
+								<template is="dom-if" if="{{logoUrl}}">
+									<img src="{{logoUrl}}" class="logo">
+								</template>
+								<template is="dom-if" if="{{headerLabel}}">
+									<div class="headerLabel">{{headerLabel}}</div>
+								</template>
+							</div>
+							<div class="flexchild2">
+								<template is="dom-if" if="{{travelOptions}}">
+									<paper-menu selected="{{selectedOptionValue}}" attr-for-selected="value" class="centerMenuTravelOptions">
+										<template is="dom-repeat" items="[[travelOptions]]">
+											<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}" class="options">
+												<img src="{{item.imageUrl}}" class="travelOptionsIconColor">
+												<span class="travelOptionsLabel">{{item.name}}</span>
+											</paper-item>
+										</template>
+									</paper-menu>
+								</template>
+							</div>
+							<div class="flexchild3">
+								<template is="dom-if" if="{{userAccountOptions}}">
+									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions">
+										<paper-menu selected="{{selectedAccountOptionValue}}" attr-for-selected="value"
+													class="dropdown-content cursorOption" noink no-animations>
+											<template is="dom-repeat" items="[[userAccountOptions]]">
+												<paper-item name="{{item.name}}" on-tap="_openPage"
+															value="{{item.name}}">{{item.name}}</paper-item>
+											</template>
+										</paper-menu>
+									</paper-dropdown-menu>
+								</template>
+							</div>
+						</div>
+					</app-toolbar>
+				</app-header>
+			</app-header-layout>
+		</app-drawer-layout>
+		<iron-media-query query="min-width: 768px" query-matches="{{wideLayout}}"></iron-media-query>
+	</template>
+	<script>
+		Polymer({
+
+			is: 't-header',
+
+			properties: {
+				/**
+				 * Pass logo url to set the header logo
+				 */
+				logoUrl:{
+					type:String
+				},
+				/**
+				 * You can pass user account options as an array of json to set the account options like
+				 *[{"name": "Agent Login","url":"/agentlogin"},{"name": "Corporate Login","url":"/corporatelogin"},
+				 *{"name": "My Bookings","url":"/mybookings"},{"name":"Cancel Bookings","url":"cancelbookings"}]
+				 */
+				userAccountOptions: {
+					type: Array
+				},
+				/**
+				 * You can pass travel options as an array of json to set the travel options like
+				 *[{"name": "Flights", "imageUrl": "../flight.png","url":"/flights"},
+				 *{"name": "Bus", "imageUrl": "../bus.png","url":"/buses"},
+				 *{"name": "Holidays", "imageUrl": "../hotel.png","url":"/holidays"}]
+				 */
+				travelOptions: {
+					type: Array
+				},
+				/**
+				 * You can pass account label value to set the account label
+				 */
+				userAccountLabel:{
+					type:String
+				},
+				/**
+				 * You can pass header label value to set the header label
+				 */
+				headerLabel:{
+					type:String
+				},
+				/**
+				 * You can pass image url to set the user account image
+				 */
+				userAccountImageUrl:{
+					type:String
+				}
+			},
+
+			onLayoutChange: function(wide) {
+				var drawer = this.$.drawer;
+				if (wide && drawer.opened) {
+					drawer.opened = false;
+				}
+			},
+
+			attached: function() {
+				this.loginChildCount = this.queryEffectiveChildren('.login');
+				if(this.loginChildCount === undefined || this.loginChildCount === 'undefined'){
+					this._loginLabel = true;
+				}
+			},
+
+			_openPage: function(e){
+				this.setAttribute("selected",true);
+				window.open(e.model.get('item.url'));
+			}
+		});
+	</script>
+</dom-module>
