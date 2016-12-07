@@ -65,7 +65,6 @@ Example:
 ### Styling
 
 The following custom properties and mixins are available for styling:
-Apply all changes of custom css properties inside t-header{} in style tag
 
 Custom property | Description | Default
 ----------------|-------------|----------
@@ -108,13 +107,11 @@ Custom property | Description | Default
 		}
 		.headerLabelLogoSection{
 			flex:2;
-			margin-top: 5px;
 			color: white;
 			@apply(--header-logo-label-section);
 		}
 		.headerTravelOptionsSection {
 			flex:3;
-			margin-top:5px;
 			@apply(--header-travel-section);
 		}
 		.headerAccountOptionsSection {
@@ -183,9 +180,6 @@ Custom property | Description | Default
 			--paper-input-container-underline-focus:{
 				display:none;
 			};
-			--paper-input-container: {
-				padding:0px;
-			};
 			--paper-input-container-input: {
 				color:white;
 			};
@@ -217,7 +211,7 @@ Custom property | Description | Default
 							<img src="{{userAccountImageUrl}}" class="sideBarOptionsImage">
 							[[userAccountLabel]]
 						</paper-item>
-						<paper-menu class="menu-content sublist cursorOption" selected="{{selectedAccountOptionValue}}" attr-for-selected="value">
+						<paper-menu class="menu-content sublist cursorOption" selected="{{selectedOptionValue}}" attr-for-selected="value">
 							<template is="dom-repeat" items="[[userAccountOptions]]">
 								<paper-item name="{{item.name}}" on-tap="_openPage" value="{{item.name}}">{{item.name}}</paper-item>
 							</template>
@@ -262,8 +256,8 @@ Custom property | Description | Default
 							</div>
 							<div class="headerAccountOptionsSection">
 								<template is="dom-if" if="{{userAccountOptions}}">
-									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions">
-										<paper-menu selected="{{selectedAccountOptionValue}}" attr-for-selected="value"
+									<paper-dropdown-menu label="[[userAccountLabel]]" class="accountOptions" no-label-float>
+										<paper-menu selected="{{selectedOptionValue}}" attr-for-selected="value"
 													class="dropdown-content cursorOption" noink no-animations>
 											<template is="dom-repeat" items="[[userAccountOptions]]">
 												<paper-item name="{{item.name}}" on-tap="_openPage"
